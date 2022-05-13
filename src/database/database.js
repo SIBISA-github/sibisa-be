@@ -20,4 +20,4 @@ db.on('error', (err) => {
   console.log('[mysql error]', err)
 })
 
-module.exports = { db }
+module.exports = db
