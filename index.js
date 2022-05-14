@@ -1,4 +1,8 @@
 const express = require('express')
+
+// Load Environment Variables
+require('dotenv').config()
+
 const app = express()
 const { userRouters } = require('./src/routers')
 
