@@ -2,6 +2,7 @@ const UserServices = require('../services/userServices')
 const HashPassword = require('../utils/hash/hashPassword')
 const Tokenization = require('../utils/jwtToken/tokenization')
 const Response = require('../utils/response/response')
+const PayloadValidator = require('../utils/validator')
 
 class UserController {
   static async getAllUsers (req, res) {
@@ -27,6 +28,9 @@ class UserController {
     const payload = req.body
 
     try {
+      // Validate payload
+      PayloadValidator.validateUserRegister(payload)
+
       // hash password
       const hash = await HashPassword.hashPassword(payload.password)
 
@@ -50,6 +54,9 @@ class UserController {
   static async login (req, res) {
     const payload = req.body
     try {
+      // Validate payload
+      PayloadValidator.validateUserLogin(payload)
+
       // Get User From Database
       // console.log(payload)
       const user = await UserServices.getUserFromUsername(payload.username)

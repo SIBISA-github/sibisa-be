@@ -7,7 +7,7 @@ class UserServices {
     const users = await Database.query(query)
     await Database.close()
     return users[0]
-  }
+  };
 
   static async insertUserToDatabase (username, email, password) {
     await Database.createConnection()
