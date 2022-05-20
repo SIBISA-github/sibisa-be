@@ -24,13 +24,15 @@ class UserController {
   }
 
   static async register (req, res) {
-    console.log('register')
     const payload = req.body
 
     try {
       // Validate payload
       PayloadValidator.validateUserRegister(payload)
 
+      // check username is exist
+      const user = await UserServices.getUserFromUsername(payload.username)
+      if (user) throw new Error('Username already exist')
       // hash password
       const hash = await HashPassword.hashPassword(payload.password)
 

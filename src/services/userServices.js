@@ -28,7 +28,6 @@ class UserServices {
       values: [username]
     }
     const user = await Database.query(query)
-    console.log(user[0][0])
     await Database.close()
     return user[0][0]
   }
