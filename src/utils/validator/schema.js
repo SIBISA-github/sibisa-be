@@ -1,6 +1,8 @@
 const Joi = require('joi')
 
 const UserRegisterSchema = Joi.object({
+  name: Joi.string()
+    .required(),
   username: Joi.string()
     .alphanum()
     .min(3)

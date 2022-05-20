@@ -9,11 +9,11 @@ class UserServices {
     return users[0]
   };
 
-  static async insertUserToDatabase (username, email, password) {
+  static async insertUserToDatabase (name, username, email, password) {
     await Database.createConnection()
     const query = {
-      sql: 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
-      values: [username, email, password]
+      sql: 'INSERT INTO users (name, username, email, password, image, exp, idlevel, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      values: [name, username, email, password, null, 0, 1, new Date(), new Date()]
     }
 
     const user = await Database.query(query)
