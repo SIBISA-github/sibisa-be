@@ -13,6 +13,10 @@ const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./src/swagger/swagger.json')
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
+//  for body parser
+app.use(express.json({ limit: '20mb' }))
+app.use(express.urlencoded({ extended: false, limit: '20mb' }))
+
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
