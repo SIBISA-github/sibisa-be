@@ -1,4 +1,3 @@
-const db = require('../database/database')
 const UserServices = require('../services/userServices')
 const HashPassword = require('../utils/hash/hashPassword')
 const Tokenization = require('../utils/jwtToken/tokenization')
@@ -7,15 +6,19 @@ const Response = require('../utils/response/response')
 class UserController {
   static async getAllUsers (req, res) {
     try {
-      console.log('getAllUsers')
-      await db.query('SELECT * FROM users', (err, result) => {
-        if (err) res.status(500).send(err)
-        res.status(200).json(result)
-      })
+      const users = await UserServices.getAllUsers()
+
+      if (!users) throw new Error('Error while get all users')
+
+      const response = Response.successResponse(200, 'Get All Users', users)
+
+      return res.status(200).send(response)
     } catch (err) {
-      res.status(500).json({
-        message: err.message
-      })
+      // Beautify error message to remove double quote from joi validation
+      const message = err.message.replace(/['"]+/g, '')
+      const response = Response.badResponse(message, 400)
+
+      return res.status(400).send(response)
     }
   }
 
@@ -65,9 +68,11 @@ class UserController {
 
       return res.status(200).send(response)
     } catch (err) {
-      res.status(500).json({
-        message: err.message
-      })
+      // Beautify error message to remove double quote from joi validation
+      const message = err.message.replace(/['"]+/g, '')
+      const response = Response.badResponse(message, 400)
+
+      return res.status(400).send(response)
     }
   }
 }

@@ -1,6 +1,14 @@
 const Database = require('../database/database')
 
 class UserServices {
+  static async getAllUsers () {
+    await Database.createConnection()
+    const query = 'SELECT * FROM users'
+    const users = await Database.query(query)
+    await Database.close()
+    return users[0]
+  }
+
   static async insertUserToDatabase (username, email, password) {
     await Database.createConnection()
     const query = {
