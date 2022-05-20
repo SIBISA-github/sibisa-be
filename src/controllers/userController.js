@@ -37,7 +37,7 @@ class UserController {
       const hash = await HashPassword.hashPassword(payload.password)
 
       // Insert To DB
-      const insertUser = await UserServices.insertUserToDatabase(payload.username, payload.email, hash)
+      const insertUser = await UserServices.insertUserToDatabase(payload.name, payload.username, payload.email, hash)
 
       if (!insertUser) throw new Error('Error while register user')
       // Create Base Response
