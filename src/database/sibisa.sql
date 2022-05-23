@@ -107,7 +107,7 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `image` longtext NOT NULL,
+  `image` longtext,
   `exp` int(11) NOT NULL,
   `idlevel` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
