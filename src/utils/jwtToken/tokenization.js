@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 class Tokenization {
   static makeToken (payload) {
     // Create jwt token
-    return jwt.sign(payload, process.env.JWT_SECRET)
+    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' })
   }
 
   static verifyToken (token) {
