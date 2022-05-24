@@ -11,7 +11,10 @@ class questionServices {
 
   static async getQuestionById (id) {
     await Database.createConnection()
-    const query = `SELECT * FROM questions WHERE id = "${id}"`
+    const query = {
+      sql: 'SELECT * FROM questions WHERE id = ?',
+      values: [id]
+    }
     const question = await Database.query(query)
     await Database.close()
     return question[0]
@@ -19,7 +22,10 @@ class questionServices {
 
   static async getQuestionByLevel (level) {
     await Database.createConnection()
-    const query = `SELECT * FROM questions WHERE question_level = "${level}"`
+    const query = {
+      sql: 'SELECT * FROM questions WHERE idlevel = ?',
+      values: [level]
+    }
     const question = await Database.query(query)
     await Database.close()
     return question[0]
