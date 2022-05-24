@@ -82,7 +82,6 @@ class questionController {
 
       const response = Response.successResponse(200, 'Questions retrieved successfully', questions)
 
-
       return res.status(200).send(response)
     } catch (err) {
       const message = err.message.replace(/['"]+/g, '')
