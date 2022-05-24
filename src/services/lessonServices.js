@@ -23,7 +23,7 @@ class lessonServices {
   static async getLessonByLevel (level) {
     await Database.createConnection()
     const query = {
-      sql: 'SELECT * FROM lessons WHERE lesson_level = ?',
+      sql: 'SELECT * FROM lessons WHERE level = ?',
       values: [level]
     }
     const lesson = await Database.query(query)
