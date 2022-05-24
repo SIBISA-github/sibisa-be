@@ -1,6 +1,7 @@
 const questionServices = require('../services/questionServices')
 const Tokenization = require('../utils/jwtToken/tokenization')
 const Response = require('../utils/response/response')
+const PayloadValidator = require('../utils/validator')
 
 class questionController {
   static async getAllQuestions (req, res) {
@@ -43,6 +44,9 @@ class questionController {
 
       if (!authorization) throw new Error('Invalid token')
 
+      // validate parameter
+      PayloadValidator.validateQuestionID(req.params.id)
+
       const question = await questionServices.getQuestionById(req.params.id)
 
       if (!question) throw new Error('Error while getting questions')
@@ -68,6 +72,9 @@ class questionController {
       const authorization = Tokenization.verifyToken(token)
 
       if (!authorization) throw new Error('Invalid token')
+
+      // validate parameter
+      PayloadValidator.validateLevelID(req.params.level)
 
       const questions = await questionServices.getQuestionByLevel(req.params.level)
 
