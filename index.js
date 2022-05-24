@@ -8,6 +8,7 @@ const app = express()
 app.use(cors())
 const { questionRouters } = require('./src/routers')
 const { userRouters } = require('./src/routers')
+const { lessonRouters } = require('./src/routers')
 
 // Swagger
 const swaggerUi = require('swagger-ui-express')
@@ -24,5 +25,6 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/question', questionRouters)
 app.use('/api/v1/user', userRouters)
+app.use('/api/v1/lesson', lessonRouters)
 
 app.listen(process.env.PORT || 5000, () => console.log('connection success'))
