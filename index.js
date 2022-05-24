@@ -23,8 +23,8 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.use('/api/v1/question', questionRouters)
+app.use('/api/v1/questions', questionRouters)
 app.use('/api/v1/user', userRouters)
-app.use('/api/v1/lesson', lessonRouters)
+app.use('/api/v1/lessons', lessonRouters)
 
 app.listen(process.env.PORT || 5000, () => console.log('connection success'))
