@@ -35,9 +35,12 @@ const QuestionIDSchema = Joi.number().integer().required()
 
 const LevelIDSchema = Joi.number().integer().required()
 
+const LessonIDSchema = Joi.number().integer().required()
+
 module.exports = {
   UserRegisterSchema,
   UserLoginSchema,
   QuestionIDSchema,
-  LevelIDSchema
+  LevelIDSchema,
+  LessonIDSchema
 }

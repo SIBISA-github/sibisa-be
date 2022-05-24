@@ -23,7 +23,7 @@ class questionServices {
   static async getQuestionByLevel (level) {
     await Database.createConnection()
     const query = {
-      sql: 'SELECT * FROM questions WHERE idlevel = ?',
+      sql: 'SELECT * FROM questions WHERE question_level = ?',
       values: [level]
     }
     const question = await Database.query(query)

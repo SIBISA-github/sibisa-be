@@ -1,10 +1,10 @@
-const questionServices = require('../services/questionServices')
+const lessonServices = require('../services/lessonServices')
 const Tokenization = require('../utils/jwtToken/tokenization')
 const Response = require('../utils/response/response')
 const PayloadValidator = require('../utils/validator')
 
-class questionController {
-  static async getAllQuestions (req, res) {
+class lessonController {
+  static async getAllLessons (req, res) {
     const token = req.headers.authorization
 
     try {
@@ -16,11 +16,11 @@ class questionController {
 
       if (!authorization) throw new Error('Invalid token')
 
-      const questions = await questionServices.getAllQuestions()
+      const lessons = await lessonServices.getAllLessons()
 
-      if (!questions) throw new Error('Error while getting questions')
+      if (!lessons) throw new Error('Error while getting lessons')
 
-      const response = Response.successResponse(200, 'Questions retrieved successfully', questions)
+      const response = Response.successResponse(200, 'Lessons retrieved successfully', lessons)
 
       return res.status(200).send(response)
     } catch (err) {
@@ -32,7 +32,7 @@ class questionController {
     }
   }
 
-  static async getQuestionById (req, res) {
+  static async getLessonByID (req, res) {
     const token = req.headers.authorization
 
     try {
@@ -45,13 +45,13 @@ class questionController {
       if (!authorization) throw new Error('Invalid token')
 
       // validate parameter
-      PayloadValidator.validateQuestionID(req.params.id)
+      PayloadValidator.validateLessonID(req.params.id)
 
-      const question = await questionServices.getQuestionById(req.params.id)
+      const lesson = await lessonServices.getLessonByID(req.params.id)
 
-      if (!question) throw new Error('Error while getting questions')
+      if (!lesson) throw new Error('Error while getting lessons')
 
-      const response = Response.successResponse(200, 'Questions retrieved successfully', question)
+      const response = Response.successResponse(200, 'Lessons retrieved successfully', lesson)
 
       return res.status(200).send(response)
     } catch (err) {
@@ -62,8 +62,9 @@ class questionController {
     }
   }
 
-  static async getQuestionByLevel (req, res) {
+  static async getLessonByLevel (req, res) {
     const token = req.headers.authorization
+
     try {
       // Check if token exist
       if (!token) throw new Error('Token is required')
@@ -76,19 +77,20 @@ class questionController {
       // validate parameter
       PayloadValidator.validateLevelID(req.params.level)
 
-      const questions = await questionServices.getQuestionByLevel(req.params.level)
+      const lesson = await lessonServices.getLessonByLevel(req.params.level)
 
-      if (!questions) throw new Error('Error while getting questions')
+      if (!lesson) throw new Error('Error while getting lessons')
 
-      const response = Response.successResponse(200, 'Questions retrieved successfully', questions)
+      const response = Response.successResponse(200, 'Lessons retrieved successfully', lesson)
 
       return res.status(200).send(response)
     } catch (err) {
       const message = err.message.replace(/['"]+/g, '')
       const response = Response.badResponse(message, 400)
+
       return res.status(400).send(response)
     }
   }
 }
 
-module.exports = questionController
+module.exports = lessonController
