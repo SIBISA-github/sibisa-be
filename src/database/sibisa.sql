@@ -27,7 +27,8 @@ CREATE TABLE `lessons` (
   `title` varchar(255) NOT NULL,
   `description` longtext NOT NULL,
   `level` int(11) NOT NULL,
-  `created_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `lessons_level_foreign` (`level`),
   CONSTRAINT `lessons_level_foreign` FOREIGN KEY (`level`) REFERENCES `level` (`id`)
@@ -53,7 +54,8 @@ DROP TABLE IF EXISTS `level`;
 CREATE TABLE `level` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `level_name` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -80,7 +82,8 @@ CREATE TABLE `questions` (
   `question_level` int(11) NOT NULL,
   `question` longtext NOT NULL,
   `answer` varchar(255) DEFAULT NULL,
-  `created_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -98,10 +101,10 @@ UNLOCK TABLES;
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -110,8 +113,8 @@ CREATE TABLE `user` (
   `image` longtext,
   `exp` int(11) NOT NULL,
   `idlevel` int(11) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `user_idlevel_foreign` (`idlevel`),
   CONSTRAINT `user_idlevel_foreign` FOREIGN KEY (`idlevel`) REFERENCES `level` (`id`)
@@ -122,9 +125,9 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -138,12 +141,13 @@ CREATE TABLE `user_answer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `question_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `user_answer_user_id_foreign` (`user_id`),
   KEY `user_answer_question_id_foreign` (`question_id`),
   CONSTRAINT `user_answer_question_id_foreign` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`),
-  CONSTRAINT `user_answer_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `user_answer_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
