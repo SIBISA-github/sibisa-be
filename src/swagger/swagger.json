@@ -249,6 +249,95 @@
         }
       }
     },
+    "/api/v1/user/level": {
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Update user level",
+        "description": "Update user level",
+        "operationId": "updateUserLevel",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idLevel": {
+                    "type": "integer",
+                    "format": "int64",
+                    "minimum": 1,
+                    "maximum": 3
+                  }
+                }
+              }
+            }
+          },
+          "description": "Update user level"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/user/exp": {
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Update user exp",
+        "description": "Update user exp",
+        "operationId": "updateUserExp",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "exp": {
+                    "type": "integer",
+                    "format": "int64",
+                    "minimum": 0
+                  }
+                }
+              }
+            }
+          },
+          "description": "Update user exp"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/v1/questions": {
       "get": {
         "tags": [

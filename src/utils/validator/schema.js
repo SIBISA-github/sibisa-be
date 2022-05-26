@@ -31,16 +31,39 @@ const UserLoginSchema = Joi.object({
     .pattern(/^[a-zA-Z0-9]{3,30}$/)
 })
 
-const QuestionIDSchema = Joi.number().integer().required()
+const QuestionIDSchema = Joi.number()
+  .integer()
+  .min(1)
+  .required()
 
-const LevelIDSchema = Joi.number().integer().required()
+const LevelIDSchema = Joi.number()
+  .integer()
+  .min(1)
+  .max(3)
+  .required()
 
-const LessonIDSchema = Joi.number().integer().required()
+const LessonIDSchema = Joi.number()
+  .integer()
+  .min(1)
+  .required()
+
+const LevelUserSchema = Joi.object({
+  idLevel: LevelIDSchema
+})
+
+const LevelExpSchema = Joi.object({
+  exp: Joi.number()
+    .integer()
+    .min(0)
+    .required()
+})
 
 module.exports = {
   UserRegisterSchema,
   UserLoginSchema,
   QuestionIDSchema,
   LevelIDSchema,
-  LessonIDSchema
+  LessonIDSchema,
+  LevelUserSchema,
+  LevelExpSchema
 }
