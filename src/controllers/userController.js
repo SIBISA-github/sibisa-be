@@ -91,6 +91,70 @@ class UserController {
       return res.status(400).send(response)
     }
   }
+
+  static async updateLevel (req, res) {
+    const token = req.headers.authorization
+    const payload = req.body
+    try {
+      // Check if token exist
+      if (!token) throw new Error('Token is required')
+
+      // validate token
+      const authorization = Tokenization.verifyToken(token)
+
+      if (!authorization) throw new Error('Invalid token')
+
+      // validate payload
+      PayloadValidator.validateUserLevel(payload)
+
+      // Update Level
+      const updateLevel = await UserServices.updateUserLevelByID(authorization.id, payload.idLevel)
+
+      if (!updateLevel) throw new Error('Error while update level')
+      // Create Base Response
+      const response = Response.successResponse(200, 'User Updated', null)
+
+      return res.status(201).send(response)
+    } catch (err) {
+      // Beautify error message to remove double quote from joi validation
+      const message = err.message.replace(/['"]+/g, '')
+      const response = Response.badResponse(message, 400)
+
+      return res.status(400).send(response)
+    }
+  }
+
+  static async updateExp (req, res) {
+    const token = req.headers.authorization
+    const payload = req.body
+    try {
+      // Check if token exist
+      if (!token) throw new Error('Token is required')
+
+      // validate token
+      const authorization = Tokenization.verifyToken(token)
+
+      if (!authorization) throw new Error('Invalid token')
+
+      // validate payload
+      PayloadValidator.validateUserExp(payload)
+
+      // Update Exp
+      const updateExp = await UserServices.updateUserExpByID(authorization.id, payload.exp)
+
+      if (!updateExp) throw new Error('Error while update exp')
+      // Create Base Response
+      const response = Response.successResponse(200, 'User Updated', null)
+
+      return res.status(201).send(response)
+    } catch (err) {
+      // Beautify error message to remove double quote from joi validation
+      const message = err.message.replace(/['"]+/g, '')
+      const response = Response.badResponse(message, 400)
+
+      return res.status(400).send(response)
+    }
+  }
 }
 
 module.exports = UserController

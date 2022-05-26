@@ -31,6 +31,28 @@ class UserServices {
     await Database.close()
     return user[0][0]
   }
+
+  static async updateUserLevelByID (id, level) {
+    await Database.createConnection()
+    const query = {
+      sql: 'UPDATE users SET idlevel = ? WHERE id = ?',
+      values: [level, id]
+    }
+    const user = await Database.query(query)
+    await Database.close()
+    return user
+  }
+
+  static async updateUserExpByID (id, exp) {
+    await Database.createConnection()
+    const query = {
+      sql: 'UPDATE users SET exp = ? WHERE id = ?',
+      values: [exp, id]
+    }
+    const user = await Database.query(query)
+    await Database.close()
+    return user
+  }
 }
 
 module.exports = UserServices
