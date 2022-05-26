@@ -1,14 +1,8 @@
 const multer = require('multer')
+const { bucket } = require('./storage')
 
 class UploadFiles {
-  static fileStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'images')
-    },
-    filename: (req, file, cb) => {
-      cb(null, new Date().getTime() + '-' + file.originalname)
-    }
-  })
+  static fileStorage = multer.memoryStorage()
 
   static fileFilter = (req, file, cb) => {
     if (
@@ -20,6 +14,23 @@ class UploadFiles {
     } else {
       cb(null, false)
     }
+  }
+
+  static async uploadToGoogleCloudStorage (image, newFileName) {
+    const blob = bucket.file(newFileName)
+    const blobStream = blob.createWriteStream({
+      resumable: false,
+      gzip: true
+    })
+
+    blobStream.on('error', (err) => {
+      console.log(err)
+    })
+    blobStream.on('finish', () => {
+      const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`
+      console.log(publicUrl)
+    })
+    blobStream.end(image.buffer)
   }
 }
 

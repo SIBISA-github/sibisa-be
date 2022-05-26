@@ -3,7 +3,7 @@ const HashPassword = require('../utils/hash/hashPassword')
 const Tokenization = require('../utils/jwtToken/tokenization')
 const Response = require('../utils/response/response')
 const PayloadValidator = require('../utils/validator')
-const path = require('path')
+const UploadFiles = require('../cloud-storage/uploadFile')
 
 class UserController {
   static async getAllUsers (req, res) {
@@ -27,19 +27,25 @@ class UserController {
   static async updateDataUsers (req, res) {
     const id = req.params.id
     const payload = req.body
-    console.log(payload)
-    let image = req.file.path
-    console.log(image)
+    let newFileName
+    const image = req.file
     try {
       let user = await UserServices.getUserById(id)
 
       if (!user) throw new Error('User not found')
 
+      if (image) {
+        newFileName = new Date().getTime() + '-' + image.originalname
+        UploadFiles.uploadToGoogleCloudStorage(image, newFileName)
+        newFileName = process.env.PATH_STORAGE + newFileName
+      } else {
+        newFileName = user.image
+      }
+
       if (!payload.name) payload.name = user.name
       if (!payload.username) payload.username = user.username
-      if (!image) image = user.image
 
-      const updateUser = await UserServices.updateUser(id, payload.name, payload.username)
+      const updateUser = await UserServices.updateUser(id, payload.name, payload.username, newFileName)
 
       if (!updateUser) throw new Error('Error while update user')
 
