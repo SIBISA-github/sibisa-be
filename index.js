@@ -13,8 +13,9 @@ const { lessonRouters } = require('./src/routers')
 // Swagger
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./src/swagger/swagger.json')
+// const { getBuckets } = require('./src/cloud-storage/storage')
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-
+// getBuckets()
 //  for body parser
 app.use(express.json({ limit: '20mb' }))
 app.use(express.urlencoded({ extended: false, limit: '20mb' }))
