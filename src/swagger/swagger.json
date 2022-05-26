@@ -68,6 +68,10 @@
           "created_at": {
             "type": "string",
             "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -89,6 +93,10 @@
             "type": "integer"
           },
           "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
             "type": "string",
             "format": "date-time"
           }
@@ -445,6 +453,62 @@
             "bearerAuth": []
           }
         ]
+      }
+    },
+    "/api/v1/questions/create": {
+      "post": {
+        "tags": [
+          "questions"
+        ],
+        "summary": "Create a question",
+        "description": "Create a question",
+        "operationId": "createQuestion",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "question_type": {
+                    "type": "string",
+                    "enum": [
+                      "huruf",
+                      "kata",
+                      "gambar"
+                    ]
+                  },
+                  "question_level": {
+                    "type": "integer",
+                    "format": "int64",
+                    "minimum": 1,
+                    "maximum": 3
+                  },
+                  "question": {
+                    "type": "string"
+                  },
+                  "answer": {
+                    "type": "string",
+                    "default": null,
+                    "required": false
+                  }
+                }
+              }
+            }
+          },
+          "description": "Create a question"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Question"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v1/lessons": {
