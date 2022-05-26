@@ -30,6 +30,17 @@ class questionServices {
     await Database.close()
     return question[0]
   }
+
+  static async insertQuestion (questionType, questionLlevel, question, answer) {
+    await Database.createConnection()
+    const query = {
+      sql: 'INSERT INTO questions (question_type, question_level, question, answer) VALUES (?, ?, ?, ?)',
+      values: [questionType, questionLlevel, question, answer]
+    }
+    const result = await Database.query(query)
+    await Database.close()
+    return result
+  }
 }
 
 module.exports = questionServices

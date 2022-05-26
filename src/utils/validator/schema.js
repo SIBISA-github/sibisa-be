@@ -58,6 +58,19 @@ const LevelExpSchema = Joi.object({
     .required()
 })
 
+const CreateQuestionSchema = Joi.object({
+  question_type: Joi.string()
+    .valid('huruf', 'kata', 'gambar'),
+  question_level: LevelIDSchema,
+  question: Joi.string()
+    // .pattern(/^[a-zA-Z0-9:;,+=/]{1,}$/)
+    .pattern(/^[a-zA-Z0-9:/.]{1,}$/)
+    .required(),
+  answer: Joi.string()
+    .alphanum()
+    .allow(null)
+})
+
 module.exports = {
   UserRegisterSchema,
   UserLoginSchema,
@@ -65,5 +78,6 @@ module.exports = {
   LevelIDSchema,
   LessonIDSchema,
   LevelUserSchema,
-  LevelExpSchema
+  LevelExpSchema,
+  CreateQuestionSchema
 }
