@@ -3,6 +3,7 @@ const HashPassword = require('../utils/hash/hashPassword')
 const Tokenization = require('../utils/jwtToken/tokenization')
 const Response = require('../utils/response/response')
 const PayloadValidator = require('../utils/validator')
+const path = require('path')
 
 class UserController {
   static async getAllUsers (req, res) {
@@ -13,6 +14,38 @@ class UserController {
 
       const response = Response.successResponse(200, 'Get All Users', users)
 
+      return res.status(200).send(response)
+    } catch (err) {
+      // Beautify error message to remove double quote from joi validation
+      const message = err.message.replace(/['"]+/g, '')
+      const response = Response.badResponse(message, 400)
+
+      return res.status(400).send(response)
+    }
+  }
+
+  static async updateDataUsers (req, res) {
+    const id = req.params.id
+    const payload = req.body
+    console.log(payload)
+    let image = req.file.path
+    console.log(image)
+    try {
+      let user = await UserServices.getUserById(id)
+
+      if (!user) throw new Error('User not found')
+
+      if (!payload.name) payload.name = user.name
+      if (!payload.username) payload.username = user.username
+      if (!image) image = user.image
+
+      const updateUser = await UserServices.updateUser(id, payload.name, payload.username)
+
+      if (!updateUser) throw new Error('Error while update user')
+
+      user = await UserServices.getUserById(id)
+
+      const response = Response.successResponse(200, 'Update User Success', user)
       return res.status(200).send(response)
     } catch (err) {
       // Beautify error message to remove double quote from joi validation

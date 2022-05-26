@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const multer = require('multer')
 
 // Load Environment Variables
 require('dotenv').config()
@@ -13,12 +14,18 @@ const { lessonRouters } = require('./src/routers')
 // Swagger
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./src/swagger/swagger.json')
+const UploadFiles = require('./src/cloud-storage/uploadFile')
 // const { getBuckets } = require('./src/cloud-storage/storage')
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 // getBuckets()
 //  for body parser
+// untuk image
+
+// app.use(bodyParser.json())
 app.use(express.json({ limit: '20mb' }))
 app.use(express.urlencoded({ extended: false, limit: '20mb' }))
+
+app.use(multer({ storage: UploadFiles.fileStorage, fileFilter: UploadFiles.fileFilter }).single('image'))
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
