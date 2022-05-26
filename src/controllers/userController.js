@@ -69,8 +69,15 @@ class UserController {
       const comparePassword = await HashPassword.checkPassword(payload.password, user.password)
       if (!comparePassword) throw new Error('Password not match')
 
+      const userData = {
+        id: user.id,
+        name: user.name,
+        username: user.username,
+        email: user.email
+      }
+
       // Create Token
-      const token = await Tokenization.makeToken(user)
+      const token = await Tokenization.makeToken(userData)
 
       // Create Base Response
       const response = Response.successResponse(200, 'Login Success', { token })

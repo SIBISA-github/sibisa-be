@@ -1,6 +1,9 @@
 const {
   UserRegisterSchema,
-  UserLoginSchema
+  UserLoginSchema,
+  QuestionIDSchema,
+  LevelIDSchema,
+  LessonIDSchema
 } = require('./schema')
 
 const PayloadValidator = {
@@ -14,6 +17,30 @@ const PayloadValidator = {
   },
   validateUserRegister: (payload) => {
     const validationResult = UserRegisterSchema.validate(payload)
+    if (validationResult.error) {
+      throw new Error(validationResult.error.details[0].message)
+    }
+
+    return true
+  },
+  validateQuestionID: (payload) => {
+    const validationResult = QuestionIDSchema.validate(payload)
+    if (validationResult.error) {
+      throw new Error(validationResult.error.details[0].message)
+    }
+
+    return true
+  },
+  validateLevelID: (payload) => {
+    const validationResult = LevelIDSchema.validate(payload)
+    if (validationResult.error) {
+      throw new Error(validationResult.error.details[0].message)
+    }
+
+    return true
+  },
+  validateLessonID: (payload) => {
+    const validationResult = LessonIDSchema.validate(payload)
     if (validationResult.error) {
       throw new Error(validationResult.error.details[0].message)
     }

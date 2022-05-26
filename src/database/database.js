@@ -1,7 +1,7 @@
 const mysql = require('mysql2/promise')
 
 class Database {
-  static async createConnection () {
+  static async createConnection() {
     this.connection = await mysql.createConnection({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -12,12 +12,13 @@ class Database {
     })
   }
 
-  static async query (sql) {
+  static async query(sql) {
     return await this.connection.execute(sql)
   }
 
-  static async close () {
+  static async close() {
     return await this.connection.end()
   }
 }
+
 module.exports = Database
