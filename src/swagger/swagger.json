@@ -10,7 +10,7 @@
       "description": "Local server"
     },
     {
-      "url": "https://api.example.com/api",
+      "url": "https://api-sibisa.herokuapp.com",
       "description": "Production server"
     }
   ],
