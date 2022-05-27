@@ -26,7 +26,7 @@ class questionController {
     } catch (err) {
       const message = err.message.replace(/['"]+/g, '')
 
-      const response = Response.badResponse(message, 400)
+      const response = Response.badResponse(400, message)
 
       return res.status(400).send(response)
     }
@@ -56,7 +56,7 @@ class questionController {
       return res.status(200).send(response)
     } catch (err) {
       const message = err.message.replace(/['"]+/g, '')
-      const response = Response.badResponse(message, 400)
+      const response = Response.badResponse(400, message)
 
       return res.status(400).send(response)
     }
@@ -85,7 +85,7 @@ class questionController {
       return res.status(200).send(response)
     } catch (err) {
       const message = err.message.replace(/['"]+/g, '')
-      const response = Response.badResponse(message, 400)
+      const response = Response.badResponse(400, message)
       return res.status(400).send(response)
     }
   }

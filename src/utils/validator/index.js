@@ -4,6 +4,8 @@ const {
   QuestionIDSchema,
   LevelIDSchema,
   LessonIDSchema,
+  UserIDSchema,
+  UserUpdateSchema,
   LevelUserSchema,
   LevelExpSchema,
   CreateQuestionSchema
@@ -50,8 +52,25 @@ const PayloadValidator = {
 
     return true
   },
+  
   validateUserLevel: (payload) => {
     const validationResult = LevelUserSchema.validate(payload)
+    if (validationResult.error) {
+      throw new Error(validationResult.error.details[0].message)
+    }
+
+    return true
+  },
+  validateUserID: (payload) => {
+    const validationResult = UserIDSchema.validate(payload)
+    if (validationResult.error) {
+      throw new Error(validationResult.error.details[0].message)
+    }
+
+    return true
+  },
+  validateUserUpdate: (payload) => {
+    const validationResult = UserUpdateSchema.validate(payload)
     if (validationResult.error) {
       throw new Error(validationResult.error.details[0].message)
     }
@@ -67,7 +86,7 @@ const PayloadValidator = {
     return true
   },
   validateQuestionData: (payload) => {
-    const validationResult = CreateQuestionSchema.validate(payload)
+    const validationResult = CreateQuestionSchema.validate(payload)=
     if (validationResult.error) {
       throw new Error(validationResult.error.details[0].message)
     }
