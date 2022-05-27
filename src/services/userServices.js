@@ -33,6 +33,7 @@ class UserServices {
     return user[0][0]
   }
 
+
   static async getUserById (id) {
     await Database.createConnection()
     const query = {
@@ -49,6 +50,28 @@ class UserServices {
     const query = {
       sql: 'UPDATE users SET name = ?, username = ?, image = ?, updated_at = ? WHERE id = ?',
       values: [name, username, image, new Date(), id]
+    }
+    const user = await Database.query(query)
+    await Database.close()
+    return user
+  }
+  
+  static async updateUserLevelByID (id, level) {
+    await Database.createConnection()
+    const query = {
+      sql: 'UPDATE users SET idlevel = ? WHERE id = ?',
+      values: [level, id]
+    }
+    const user = await Database.query(query)
+    await Database.close()
+    return user
+  }
+
+  static async updateUserExpByID (id, exp) {
+    await Database.createConnection()
+    const query = {
+      sql: 'UPDATE users SET exp = ? WHERE id = ?',
+      values: [exp, id]
     }
     const user = await Database.query(query)
     await Database.close()

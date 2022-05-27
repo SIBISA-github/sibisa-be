@@ -5,7 +5,10 @@ const {
   LevelIDSchema,
   LessonIDSchema,
   UserIDSchema,
-  UserUpdateSchema
+  UserUpdateSchema,
+  LevelUserSchema,
+  LevelExpSchema,
+  CreateQuestionSchema
 } = require('./schema')
 
 const PayloadValidator = {
@@ -49,6 +52,15 @@ const PayloadValidator = {
 
     return true
   },
+  
+  validateUserLevel: (payload) => {
+    const validationResult = LevelUserSchema.validate(payload)
+    if (validationResult.error) {
+      throw new Error(validationResult.error.details[0].message)
+    }
+
+    return true
+  },
   validateUserID: (payload) => {
     const validationResult = UserIDSchema.validate(payload)
     if (validationResult.error) {
@@ -59,6 +71,22 @@ const PayloadValidator = {
   },
   validateUserUpdate: (payload) => {
     const validationResult = UserUpdateSchema.validate(payload)
+    if (validationResult.error) {
+      throw new Error(validationResult.error.details[0].message)
+    }
+
+    return true
+  },
+  validateUserExp: (payload) => {
+    const validationResult = LevelExpSchema.validate(payload)
+    if (validationResult.error) {
+      throw new Error(validationResult.error.details[0].message)
+    }
+
+    return true
+  },
+  validateQuestionData: (payload) => {
+    const validationResult = CreateQuestionSchema.validate(payload)=
     if (validationResult.error) {
       throw new Error(validationResult.error.details[0].message)
     }
