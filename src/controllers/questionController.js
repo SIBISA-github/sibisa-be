@@ -26,7 +26,7 @@ class questionController {
     } catch (err) {
       const message = err.message.replace(/['"]+/g, '')
 
-      const response = Response.badResponse(message, 400)
+      const response = Response.badResponse(400, message)
 
       return res.status(400).send(response)
     }
@@ -56,7 +56,7 @@ class questionController {
       return res.status(200).send(response)
     } catch (err) {
       const message = err.message.replace(/['"]+/g, '')
-      const response = Response.badResponse(message, 400)
+      const response = Response.badResponse(400, message)
 
       return res.status(400).send(response)
     }
@@ -85,7 +85,28 @@ class questionController {
       return res.status(200).send(response)
     } catch (err) {
       const message = err.message.replace(/['"]+/g, '')
+      const response = Response.badResponse(400, message)
+      return res.status(400).send(response)
+    }
+  }
+
+  static async insertQuestion (req, res) {
+    const payload = req.body
+    try {
+      // validate parameter
+      PayloadValidator.validateQuestionData(payload)
+
+      const insertQuestion = await questionServices.insertQuestion(payload.question_type, payload.question_level, payload.question, payload.answer)
+
+      if (!insertQuestion) throw new Error('Error while creating question')
+
+      const response = Response.successResponse(201, 'Question created successfully', null)
+
+      return res.status(201).send(response)
+    } catch (err) {
+      const message = err.message.replace(/['"]+/g, '')
       const response = Response.badResponse(message, 400)
+
       return res.status(400).send(response)
     }
   }

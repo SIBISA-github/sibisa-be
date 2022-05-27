@@ -5,4 +5,8 @@ const routers = express.Router()
 routers.get('/', userController.getAllUsers)
 routers.post('/register', userController.register)
 routers.post('/login', userController.login)
+routers.put('/:id', userController.updateDataUsers)
+routers.get('/:id', userController.getUserById)
+routers.put('/level', userController.updateLevel)
+routers.put('/exp', userController.updateExp)
 module.exports = routers
