@@ -18,7 +18,29 @@ class UserController {
     } catch (err) {
       // Beautify error message to remove double quote from joi validation
       const message = err.message.replace(/['"]+/g, '')
-      const response = Response.badResponse(message, 400)
+      const response = Response.badResponse(400, message)
+
+      return res.status(400).send(response)
+    }
+  }
+
+  static async getUserById (req, res) {
+    const id = req.params.id
+    try {
+      // validate parameter
+      PayloadValidator.validateUserID(id)
+
+      const user = await UserServices.getUserById(id)
+
+      if (!user) throw new Error('Error while get user by id')
+
+      const response = Response.successResponse(200, 'Get User By Id', user)
+
+      return res.status(200).send(response)
+    } catch (err) {
+      // Beautify error message to remove double quote from joi validation
+      const message = err.message.replace(/['"]+/g, '')
+      const response = Response.badResponse(400, message)
 
       return res.status(400).send(response)
     }
@@ -29,7 +51,16 @@ class UserController {
     const payload = req.body
     let newFileName
     const image = req.file
+    const token = req.headers.authorization
     try {
+      // Check if token exist
+      if (!token) throw new Error('Token is required')
+
+      // validate token
+      const authorization = Tokenization.verifyToken(token)
+
+      if (!authorization) throw new Error('Invalid token')
+
       let user = await UserServices.getUserById(id)
 
       if (!user) throw new Error('User not found')
@@ -44,6 +75,9 @@ class UserController {
 
       if (!payload.name) payload.name = user.name
       if (!payload.username) payload.username = user.username
+
+      // validate payload
+      PayloadValidator.validateUserUpdate(payload)
 
       const updateUser = await UserServices.updateUser(id, payload.name, payload.username, newFileName)
 
@@ -86,7 +120,7 @@ class UserController {
     } catch (err) {
       // Beautify error message to remove double quote from joi validation
       const message = err.message.replace(/['"]+/g, '')
-      const response = Response.badResponse(message, 400)
+      const response = Response.badResponse(400, message)
 
       return res.status(400).send(response)
     }
@@ -125,7 +159,7 @@ class UserController {
     } catch (err) {
       // Beautify error message to remove double quote from joi validation
       const message = err.message.replace(/['"]+/g, '')
-      const response = Response.badResponse(message, 400)
+      const response = Response.badResponse(400, message)
 
       return res.status(400).send(response)
     }

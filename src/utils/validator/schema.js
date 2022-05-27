@@ -31,16 +31,30 @@ const UserLoginSchema = Joi.object({
     .pattern(/^[a-zA-Z0-9]{3,30}$/)
 })
 
+const UserUpdateSchema = Joi.object({
+  name: Joi.string()
+    .required(),
+  username: Joi.string()
+    .alphanum()
+    .min(3)
+    .max(30)
+    .required()
+})
+
 const QuestionIDSchema = Joi.number().integer().required()
 
 const LevelIDSchema = Joi.number().integer().required()
 
 const LessonIDSchema = Joi.number().integer().required()
 
+const UserIDSchema = Joi.number().integer().required()
+
 module.exports = {
   UserRegisterSchema,
   UserLoginSchema,
   QuestionIDSchema,
   LevelIDSchema,
-  LessonIDSchema
+  LessonIDSchema,
+  UserIDSchema,
+  UserUpdateSchema
 }

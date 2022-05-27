@@ -47,8 +47,8 @@ class UserServices {
   static async updateUser (id, name, username, image) {
     await Database.createConnection()
     const query = {
-      sql: 'UPDATE users SET name = ?, username = ?, image = ? WHERE id = ?',
-      values: [name, username, image, id]
+      sql: 'UPDATE users SET name = ?, username = ?, image = ?, updated_at = ? WHERE id = ?',
+      values: [name, username, image, new Date(), id]
     }
     const user = await Database.query(query)
     await Database.close()
