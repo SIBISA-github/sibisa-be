@@ -33,7 +33,6 @@ class UserServices {
     return user[0][0]
   }
 
-
   static async getUserById (id) {
     await Database.createConnection()
     const query = {
@@ -55,7 +54,7 @@ class UserServices {
     await Database.close()
     return user
   }
-  
+
   static async updateUserLevelByID (id, level) {
     await Database.createConnection()
     const query = {

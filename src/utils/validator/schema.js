@@ -31,7 +31,6 @@ const UserLoginSchema = Joi.object({
     .pattern(/^[a-zA-Z0-9]{3,30}$/)
 })
 
-
 const UserUpdateSchema = Joi.object({
   name: Joi.string()
     .required(),
