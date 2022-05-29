@@ -91,6 +91,27 @@ class lessonController {
       return res.status(400).send(response)
     }
   }
+
+  static async insertLesson (req, res) {
+    const payload = req.body
+    try {
+      // validate payload
+      PayloadValidator.validateLessonData(payload)
+
+      const lesson = await lessonServices.insertLesson(payload.title, payload.description, payload.level)
+
+      if (!lesson) throw new Error('Error while creating lesson')
+
+      const response = Response.successResponse(201, 'Lesson created successfully', null)
+
+      return res.status(201).send(response)
+    } catch (err) {
+      const message = err.message.replace(/['"]+/g, '')
+      const response = Response.badResponse(400, message)
+
+      return res.status(400).send(response)
+    }
+  }
 }
 
 module.exports = lessonController

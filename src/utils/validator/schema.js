@@ -81,6 +81,16 @@ const CreateQuestionSchema = Joi.object({
     .allow(null)
 })
 
+const CreateLessonSchema = Joi.object({
+  title: Joi.string()
+    .pattern(/^[a-zA-Z0-9\x20]{1,}$/)
+    .required(),
+  description: Joi.string()
+    .pattern(/^[a-zA-Z0-9\s]{1,}$/)
+    .required(),
+  level: LevelIDSchema
+})
+
 const UserIDSchema = Joi.number()
   .integer()
   .min(1)
@@ -96,5 +106,6 @@ module.exports = {
   UserUpdateSchema,
   LevelUserSchema,
   LevelExpSchema,
-  CreateQuestionSchema
+  CreateQuestionSchema,
+  CreateLessonSchema
 }
