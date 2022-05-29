@@ -31,16 +31,70 @@ const UserLoginSchema = Joi.object({
     .pattern(/^[a-zA-Z0-9]{3,30}$/)
 })
 
-const QuestionIDSchema = Joi.number().integer().required()
+const UserUpdateSchema = Joi.object({
+  name: Joi.string()
+    .required(),
+  username: Joi.string()
+    .alphanum()
+    .min(3)
+    .max(30)
+    .required()
+})
 
-const LevelIDSchema = Joi.number().integer().required()
+const QuestionIDSchema = Joi.number()
+  .integer()
+  .min(1)
+  .required()
 
-const LessonIDSchema = Joi.number().integer().required()
+const LevelIDSchema = Joi.number()
+  .integer()
+  .min(1)
+  .max(3)
+  .required()
+
+const LessonIDSchema = Joi.number()
+  .integer()
+  .min(1)
+  .required()
+
+const LevelUserSchema = Joi.object({
+  idLevel: LevelIDSchema
+})
+
+const LevelExpSchema = Joi.object({
+  exp: Joi.number()
+    .integer()
+    .min(0)
+    .required()
+})
+
+const CreateQuestionSchema = Joi.object({
+  question_type: Joi.string()
+    .valid('huruf', 'kata', 'gambar'),
+  question_level: LevelIDSchema,
+  question: Joi.string()
+    // .pattern(/^[a-zA-Z0-9:;,+=/]{1,}$/)
+    .pattern(/^[a-zA-Z0-9:/.]{1,}$/)
+    .required(),
+  answer: Joi.string()
+    .alphanum()
+    .allow(null)
+})
+
+const UserIDSchema = Joi.number()
+  .integer()
+  .min(1)
+  .required()
 
 module.exports = {
   UserRegisterSchema,
   UserLoginSchema,
   QuestionIDSchema,
   LevelIDSchema,
-  LessonIDSchema
+  LessonIDSchema,
+  UserIDSchema,
+  UserUpdateSchema,
+  LevelUserSchema,
+  LevelExpSchema,
+  CreateQuestionSchema
 }
