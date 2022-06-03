@@ -680,6 +680,52 @@
           }
         ]
       }
+    },
+    "/api/v1/lessons/create": {
+      "post": {
+        "tags": [
+          "lessons"
+        ],
+        "summary": "Create a lesson",
+        "description": "Create a lesson",
+        "operationId": "createLesson",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "level": {
+                    "type": "integer",
+                    "format": "int64",
+                    "minimum": 1,
+                    "maximum": 3
+                  }
+                }
+              }
+            }
+          },
+          "description": "Create a lesson"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lesson"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

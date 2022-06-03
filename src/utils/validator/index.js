@@ -8,7 +8,8 @@ const {
   UserUpdateSchema,
   LevelUserSchema,
   LevelExpSchema,
-  CreateQuestionSchema
+  CreateQuestionSchema,
+  CreateLessonSchema
 } = require('./schema')
 
 const PayloadValidator = {
@@ -87,6 +88,14 @@ const PayloadValidator = {
   },
   validateQuestionData: (payload) => {
     const validationResult = CreateQuestionSchema.validate(payload)
+    if (validationResult.error) {
+      throw new Error(validationResult.error.details[0].message)
+    }
+
+    return true
+  },
+  validateLessonData: (payload) => {
+    const validationResult = CreateLessonSchema.validate(payload)
     if (validationResult.error) {
       throw new Error(validationResult.error.details[0].message)
     }
