@@ -23,8 +23,19 @@ class questionServices {
   static async getQuestionByLevel (level) {
     await Database.createConnection()
     const query = {
-      sql: 'SELECT * FROM questions WHERE question_level = ?',
+      sql: 'SELECT * FROM questions WHERE question_level = ? ORDER BY RAND()',
       values: [level]
+    }
+    const question = await Database.query(query)
+    await Database.close()
+    return question[0]
+  }
+
+  static async getQuestionByLevelWithLimit (level, limit) {
+    await Database.createConnection()
+    const query = {
+      sql: 'SELECT * FROM questions WHERE question_level = ? ORDER BY RAND() LIMIT ?',
+      values: [level, limit]
     }
     const question = await Database.query(query)
     await Database.close()

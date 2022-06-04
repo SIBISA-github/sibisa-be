@@ -96,6 +96,14 @@ const UserIDSchema = Joi.number()
   .min(1)
   .required()
 
+const LevelWithLimitSchema = Joi.object({
+  level: LevelIDSchema,
+  limit: Joi.number()
+    .integer()
+    .min(1)
+    .required()
+})
+
 module.exports = {
   UserRegisterSchema,
   UserLoginSchema,
@@ -107,5 +115,6 @@ module.exports = {
   LevelUserSchema,
   LevelExpSchema,
   CreateQuestionSchema,
-  CreateLessonSchema
+  CreateLessonSchema,
+  LevelWithLimitSchema
 }
