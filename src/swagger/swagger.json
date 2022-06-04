@@ -516,6 +516,56 @@
         ]
       }
     },
+    "/api/v1/questions/level/{level}/limit/{limit}": {
+      "get": {
+        "tags": [
+          "questions"
+        ],
+        "summary": "Get questions by level with limit",
+        "description": "Get questions by level with limit",
+        "operationId": "getQuestionsByLevelWithLimit",
+        "parameters": [
+          {
+            "name": "level",
+            "in": "path",
+            "description": "Question level",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "description": "Limit",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Question"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/v1/questions/create": {
       "post": {
         "tags": [
