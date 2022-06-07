@@ -197,7 +197,7 @@ class UserController {
     }
   }
 
-  static async updateExp (req, res) {
+  static async addExp (req, res) {
     const token = req.headers.authorization
     const payload = req.body
     try {
@@ -213,7 +213,7 @@ class UserController {
       PayloadValidator.validateUserExp(payload)
 
       // Update Exp
-      const updateExp = await UserServices.updateUserExpByID(authorization.id, payload.exp)
+      const updateExp = await UserServices.addUserExpByID(authorization.id, payload.exp)
 
       if (!updateExp) throw new Error('Error while update exp')
       // Create Base Response
