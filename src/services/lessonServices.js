@@ -30,6 +30,17 @@ class lessonServices {
     await Database.close()
     return lesson[0]
   }
+
+  static async insertLesson (title, description, level) {
+    await Database.createConnection()
+    const query = {
+      sql: 'INSERT INTO lessons (title, description, level) VALUES (?, ?, ?)',
+      values: [title, description, level]
+    }
+    const result = await Database.query(query)
+    await Database.close()
+    return result
+  }
 }
 
 module.exports = lessonServices

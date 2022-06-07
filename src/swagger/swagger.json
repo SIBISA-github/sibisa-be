@@ -10,7 +10,7 @@
       "description": "Local server"
     },
     {
-      "url": "https://api.example.com/api",
+      "url": "https://api-sibisa.herokuapp.com",
       "description": "Production server"
     }
   ],
@@ -68,6 +68,10 @@
           "created_at": {
             "type": "string",
             "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -91,6 +95,10 @@
           "created_at": {
             "type": "string",
             "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }
@@ -104,7 +112,7 @@
     }
   },
   "paths": {
-    "/api/v1/users": {
+    "/api/v1/user": {
       "get": {
         "tags": [
           "users"
@@ -129,7 +137,7 @@
         }
       }
     },
-    "/api/v1/users/{id}": {
+    "/api/v1/user/{id}": {
       "get": {
         "tags": [
           "users"
@@ -161,6 +169,67 @@
             }
           }
         }
+      }
+    },
+    "/api/v1/user/{idUser}": {
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Update user by ID",
+        "description": "Update user by ID",
+        "operationId": "updateUserById",
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "path",
+            "description": "ID of user to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          },
+          "description": "User object that needs to be added"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }, 
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/v1/user/login": {
@@ -447,6 +516,112 @@
         ]
       }
     },
+    "/api/v1/questions/level/{level}/limit/{limit}": {
+      "get": {
+        "tags": [
+          "questions"
+        ],
+        "summary": "Get questions by level with limit",
+        "description": "Get questions by level with limit",
+        "operationId": "getQuestionsByLevelWithLimit",
+        "parameters": [
+          {
+            "name": "level",
+            "in": "path",
+            "description": "Question level",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "description": "Limit",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Question"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/questions/create": {
+      "post": {
+        "tags": [
+          "questions"
+        ],
+        "summary": "Create a question",
+        "description": "Create a question",
+        "operationId": "createQuestion",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "question_type": {
+                    "type": "string",
+                    "enum": [
+                      "huruf",
+                      "kata",
+                      "gambar"
+                    ]
+                  },
+                  "question_level": {
+                    "type": "integer",
+                    "format": "int64",
+                    "minimum": 1,
+                    "maximum": 3
+                  },
+                  "question": {
+                    "type": "string"
+                  },
+                  "answer": {
+                    "type": "string",
+                    "default": null,
+                    "required": false
+                  }
+                }
+              }
+            }
+          },
+          "description": "Create a question"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Question"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/lessons": {
       "get": {
         "tags": [
@@ -554,6 +729,52 @@
             "bearerAuth": []
           }
         ]
+      }
+    },
+    "/api/v1/lessons/create": {
+      "post": {
+        "tags": [
+          "lessons"
+        ],
+        "summary": "Create a lesson",
+        "description": "Create a lesson",
+        "operationId": "createLesson",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "level": {
+                    "type": "integer",
+                    "format": "int64",
+                    "minimum": 1,
+                    "maximum": 3
+                  }
+                }
+              }
+            }
+          },
+          "description": "Create a lesson"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lesson"
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

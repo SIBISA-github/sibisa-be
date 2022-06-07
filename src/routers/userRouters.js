@@ -7,4 +7,6 @@ routers.post('/register', userController.register)
 routers.post('/login', userController.login)
 routers.put('/level', userController.updateLevel)
 routers.put('/exp', userController.updateExp)
+routers.put('/:id', userController.updateDataUsers)
+routers.get('/:id', userController.getUserById)
 module.exports = routers
