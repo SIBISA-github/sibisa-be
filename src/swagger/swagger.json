@@ -368,9 +368,9 @@
         "tags": [
           "users"
         ],
-        "summary": "Update user exp",
-        "description": "Update user exp",
-        "operationId": "updateUserExp",
+        "summary": "Add user exp",
+        "description": "Add user exp",
+        "operationId": "addUserExp",
         "requestBody": {
           "content": {
             "application/json": {
@@ -386,7 +386,7 @@
               }
             }
           },
-          "description": "Update user exp"
+          "description": "Add user exp"
         },
         "responses": {
           "200": {
