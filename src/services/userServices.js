@@ -58,7 +58,7 @@ class UserServices {
   static async updateUserLevelByID (id, level) {
     await Database.createConnection()
     const query = {
-      sql: 'UPDATE users SET idlevel = ? WHERE id = ?',
+      sql: 'UPDATE users SET idlevel = GREATEST(idlevel, ?) WHERE id = ?',
       values: [level, id]
     }
     const user = await Database.query(query)
@@ -66,10 +66,10 @@ class UserServices {
     return user
   }
 
-  static async updateUserExpByID (id, exp) {
+  static async addUserExpByID (id, exp) {
     await Database.createConnection()
     const query = {
-      sql: 'UPDATE users SET exp = ? WHERE id = ?',
+      sql: 'UPDATE users SET exp = exp + ? WHERE id = ?',
       values: [exp, id]
     }
     const user = await Database.query(query)
