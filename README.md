@@ -2,14 +2,14 @@
 > sibisa-be
 
 ## LINK WEBSITE
-https://sibisa-351215.et.r.appspot.com/
-https://sibisa-351215.et.r.appspot.com/
+https://sibisa-351215.et.r.appspot.com/ </br>
+https://sibisa-351215.et.r.appspot.com/ </br>
 https://sibisa-351215.et.r.appspot.com/
 
 
 ## Table of contents
 * [Brief Description](#brief-description)
-* [Instalasi Requirements](#instalasi-requirements)
+* [Installation Requirements](#installation-requirements)
 * [Download Folder](#download-folder)
 * [How To Use](#how-to-use)
 * [Author](#author)
@@ -17,39 +17,40 @@ https://sibisa-351215.et.r.appspot.com/
 
 ## Brief Description
 Sibisa-be is an Application Programming Interface (API) that used to provide services for SIBISA app.
-The following are services provided by Sibis-be.
+The following are services provided by Sibisa-be.
 1. Authenticating User
 2. Providing Lessons for SIBISA
 3. Providing Question for SIBISA
 4. Manage attributes user 
+
 For more documentation, you can click this link https://sibisa-351215.et.r.appspot.com/api-docs
 
 
-## Instalasi Requirements
+## Installation Requirements
 1. NodeJS: https://nodejs.org/en/
 2. Account Google Cloud Platform https://console.cloud.google.com/
 3. Docker Desktop https://www.docker.com/ (OPTIONAL)
 
 
-## Downloan Folder
-1. Download file zip on https://github.com/SIBISA-github/sibisa-be/
+## Download Folder
+1. Download the zip file on https://github.com/SIBISA-github/sibisa-be/
 
 
 ## How to Use 
-# On Local Computer
+### On Local Computer
 1. Clone repository Sibisa-be on https://github.com/SIBISA-github/sibisa-be/
 2. Open CLI and direct to this repository which already cloned
 3. Run npm install
 4. Run npm start
 
-# On Internet
+### On the Internet
 1. click https://sibisa-351215.et.r.appspot.com/
 
-# With docker
+### With docker
 1. Make sure you have docker desktop on your local computer 
 2. Run docker build -t sibisa:0.1 .
 3. Run docker run -p 4000:8000 --name sibisa-be-app sibisa:0.1
 
 ## Author
-* Kadek Dwi Bagus Ananta Udayana	Teknik Informatika ITB
-* Mohammad Tauchid                Teknik Informatika ITS
+* Kadek Dwi Bagus Ananta Udayana&nbsp;&nbsp;(Teknik Informatika ITB)
+* Mohammad Tauchid&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;(Teknik Informatika ITS)
